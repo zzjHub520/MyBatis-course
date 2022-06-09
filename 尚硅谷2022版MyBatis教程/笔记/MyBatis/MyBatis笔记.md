@@ -1,4 +1,4 @@
-# Mybatis简介
+# 一、Mybatis简介
 ## MyBatis历史
 -    MyBatis最初是Apache的一个开源项目iBatis, 2010年6月这个项目由Apache Software Foundation迁移到了Google Code。随着开发团队转投Google Code旗下，iBatis3.x正式更名为MyBatis。代码于2013年11月迁移到Github
 - iBatis一词来源于“internet”和“abatis”的组合，是一个基于Java的持久层框架。iBatis提供的持久层框架包括SQL Maps和Data Access Objects（DAO）
@@ -25,7 +25,7 @@
 	- 轻量级，性能出色  
 	- SQL 和 Java 编码分开，功能边界清晰。Java代码专注业务、SQL语句专注数据  
 	- 开发效率稍逊于HIbernate，但是完全能够接受
-# 搭建MyBatis
+# 二、搭建MyBatis
 ## 开发环境
 - IDE：idea 2019.2  
 - 构建工具：maven 3.5.4  
@@ -34,6 +34,7 @@
 ## 创建maven工程
 - 打包方式：jar
 - 引入依赖
+
 	```xml
 	<dependencies>
 		<!-- Mybatis核心 -->
@@ -194,7 +195,7 @@ public class UserMapperTest {
 	    </root>
 	</log4j:configuration>
 	```
-# 核心配置文件详解
+# 三、核心配置文件详解
 >核心配置文件中的标签必须按照固定的顺序(有的标签可以不写，但顺序一定不能乱)：
 properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapperFactory、reflectorFactory、plugins、environments、databaseIdProvider、mappers
 ```xml
@@ -278,10 +279,10 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 </configuration>
 ```
 - ![](Resources/mapper接口和mapper映射文件在同一包下.png)
-# 默认的类型别名
+# 四、默认的类型别名
 ![](Resources/默认的类型别名1.png)
 ![](Resources/默认的类型别名2.png)
-# MyBatis的增删改查
+# 五、MyBatis的增删改查
 1. 添加
 	```xml
 	<!--int insertUser();-->
@@ -318,11 +319,12 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 	</select>
 	```
 - 注意：
+
 	1. 查询的标签select必须设置属性resultType或resultMap，用于设置实体类和数据库表的映射关系  
 		- resultType：自动映射，用于属性名和表中字段名一致的情况  
 		- resultMap：自定义映射，用于一对多或多对一或字段名和属性名不一致的情况  
 	2. 当查询的数据为多条时，不能使用实体类作为返回值，只能使用集合，否则会抛出异常TooManyResultsException；但是若查询的数据只有一条，可以使用实体类或集合作为返回值
-# MyBatis获取参数值的两种方式（重点）
+# 六、MyBatis获取参数值的两种方式（重点）
 - MyBatis获取参数值的两种方式：${}和#{}  
 - ${}的本质就是字符串拼接，#{}的本质就是占位符赋值  
 - ${}使用字符串拼接的方式拼接sql，若为字符串类型或日期类型的字段进行赋值时，需要手动加单引号；但是#{}使用占位符赋值的方式拼接sql，此时为字符串类型或日期类型的字段进行赋值时，可以自动添加单引号
@@ -342,6 +344,7 @@ properties、settings、typeAliases、typeHandlers、objectFactory、objectWrapp
 ```
 ## 多个字面量类型的参数
 - 若mapper接口中的方法参数为多个时，此时MyBatis会自动将这些参数放在一个map集合中
+
 	1. 以arg0,arg1...为键，以参数为值；
 	2. 以param1,param2...为键，以参数为值；
 - 因此只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号。
@@ -397,6 +400,7 @@ public void insertUser() {
 ```
 ## 使用@Param标识参数
 - 可以通过@Param注解标识mapper接口中的方法参数，此时，会将这些参数放在map集合中 
+
 	1. 以@Param注解的value属性值为键，以参数为值；
 	2. 以param1,param2...为键，以参数为值；
 - 只需要通过\${}和#{}访问map集合的键就可以获取相对应的值，注意${}需要手动加单引号
@@ -416,9 +420,10 @@ public void checkLoginByParam() {
 ```
 ## 总结
 - 建议分成两种情况进行处理
+
 	1. 实体类类型的参数
 	2. 使用@Param标识参数
-# MyBatis的各种查询功能
+# 七、MyBatis的各种查询功能
 1. 如果查询出的数据只有一条，可以通过
 	1. 实体类对象接收
 	2. List集合接收
@@ -536,7 +541,7 @@ Map<String, Object> getAllUserToMap();
 	}
 -->
 ```
-# 特殊SQL的执行
+# 八、特殊SQL的执行
 ## 模糊查询
 ```java
 /**
@@ -635,7 +640,7 @@ public void insertUser() {
 	//输出：user{id=10, username='ton', password='123', age=23, sex='男', email='123@321.com'}，自增主键存放到了user的id属性中
 }
 ```
-# 自定义映射resultMap
+# 九、自定义映射resultMap
 ## resultMap处理字段和属性的映射关系
 - resultMap：设置自定义映射  
 	- 属性：  
@@ -662,6 +667,7 @@ public void insertUser() {
 </select>
 ```
 - 若字段名和实体类中的属性名不一致，但是字段名符合数据库的规则（使用_），实体类中的属性名符合Java的规则（使用驼峰）。此时也可通过以下两种方式处理字段名和实体类中的属性的映射关系  
+
 	1. 可以通过为字段起别名的方式，保证和实体类中的属性名保持一致  
 		```xml
 		<!--List<Emp> getAllEmp();-->
@@ -671,9 +677,9 @@ public void insertUser() {
 		```
 	2. 可以在MyBatis的核心配置文件中的`setting`标签中，设置一个全局配置信息mapUnderscoreToCamelCase，可以在查询表中数据时，自动将_类型的字段名转换为驼峰，例如：字段名user_name，设置了mapUnderscoreToCamelCase，此时字段名就会转换为userName。[核心配置文件详解](#核心配置文件详解)
 		```xml
-    <settings>
-        <setting name="mapUnderscoreToCamelCase" value="true"/>
-    </settings>
+	<settings>
+	    <setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
 		```
 ## 多对一映射处理
 >查询员工信息以及员工所对应的部门信息
@@ -887,6 +893,7 @@ public void getEmpAndDeptByStepOne() {
 ```
 - 开启后，需要用到查询dept的时候才会调用相应的SQL语句![](Resources/延迟加载测试3.png)
 - fetchType：当开启了全局的延迟加载之后，可以通过该属性手动控制延迟加载的效果，fetchType="lazy(延迟加载)|eager(立即加载)"
+
 	```xml
 	<resultMap id="empAndDeptByStepResultMap" type="Emp">
 		<id property="eid" column="eid"></id>
@@ -900,7 +907,7 @@ public void getEmpAndDeptByStepOne() {
 					 fetchType="lazy"></association>
 	</resultMap>
 	```
-# 动态SQL
+# 十、动态SQL
 - Mybatis框架的动态SQL技术是一种根据特定条件动态拼装SQL语句的功能，它存在的意义是为了解决拼接SQL语句字符串时的痛点问题
 ## if
 - if标签可通过test属性（即传递过来的数据）的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之标签中的内容不会执行
@@ -952,6 +959,7 @@ public void getEmpAndDeptByStepOne() {
 </select>
 ```
 - 注意：where标签不能去掉条件后多余的and/or
+
 	```xml
 	<!--这种用法是错误的，只能去掉条件前面的and/or，条件后面的不行-->
 	<if test="empName != null and empName !=''">
@@ -1046,6 +1054,7 @@ public void getEmpByChoose() {
 	- open：设置foreach标签中的内容的开始符  
 	- close：设置foreach标签中的内容的结束符
 - 批量删除
+
 	```xml
 	<!--int deleteMoreByArray(Integer[] eids);-->
 	<delete id="deleteMoreByArray">
@@ -1066,6 +1075,7 @@ public void getEmpByChoose() {
 	```
 	![](Resources/foreach测试结果1.png)
 - 批量添加
+
 	```xml
 	<!--int insertMoreByList(@Param("emps") List<Emp> emps);-->
 	<insert id="insertMoreByList">
@@ -1102,10 +1112,11 @@ public void getEmpByChoose() {
 	select <include refid="empColumns"></include> from t_emp
 </select>
 ```
-# MyBatis的缓存
+# 十一、MyBatis的缓存
 ## MyBatis的一级缓存
 - 一级缓存是SqlSession级别的，通过同一个SqlSession查询的数据会被缓存，下次查询相同的数据，就会从缓存中直接获取，不会从数据库重新访问  
 - 使一级缓存失效的四种情况：  
+
 	1. 不同的SqlSession对应不同的一级缓存  
 	2. 同一个SqlSession但是查询条件不同
 	3. 同一个SqlSession两次查询期间执行了任何一次增删改操作
@@ -1113,6 +1124,7 @@ public void getEmpByChoose() {
 ## MyBatis的二级缓存
 - 二级缓存是SqlSessionFactory级别，通过同一个SqlSessionFactory创建的SqlSession查询的结果会被缓存；此后若再次执行相同的查询语句，结果就会从缓存中获取  
 - 二级缓存开启的条件
+
 	1. 在核心配置文件中，设置全局配置属性cacheEnabled="true"，默认为true，不需要设置
 	2. 在映射文件中设置标签<cache />
 	3. 二级缓存必须在SqlSession关闭或提交之后有效
@@ -1224,7 +1236,7 @@ public void getEmpByChoose() {
 | diskPersistent | 否 | 在VM重启的时候是否启用磁盘保存EhCache中的数据，默认是false |
 | diskExpiryThreadIntervalSeconds | 否 | 磁盘缓存的清理线程运行间隔，默认是120秒。每个120s， 相应的线程会进行一次EhCache中数据的清理工作 |
 | memoryStoreEvictionPolicy | 否 | 当内存缓存达到最大，有新的element加入的时候， 移除缓存中element的策略。 默认是LRU（最近最少使用），可选的有LFU（最不常使用）和FIFO（先进先出 |
-# MyBatis的逆向工程
+# 十二、MyBatis的逆向工程
 - 正向工程：先创建Java实体类，由框架负责根据实体类生成数据库表。Hibernate是支持正向工程的
 - 逆向工程：先创建数据库表，由框架负责根据数据库表，反向生成如下资源：  
 	- Java实体类  
@@ -1401,7 +1413,7 @@ public void getEmpByChoose() {
 - `updateByPrimaryKeySelective()`：通过主键进行选择性数据修改，如果某个值为null，则不修改这个字段
 	- `mapper.updateByPrimaryKeySelective(new Emp(2,"admin2",22,null,"456@qq.com",3));`
 	- ![](Resources/增删改测试结果2.png)
-# 分页插件
+# 十三、分页插件
 ## 分页插件使用步骤
 ### 添加依赖
 ```xml
@@ -1460,6 +1472,7 @@ public void testPageHelper() throws IOException {
 }
 ```
 - 分页相关数据：
+
 	```
 	Page{count=true, pageNum=1, pageSize=4, startRow=0, endRow=4, total=8, pages=2, reasonable=false, pageSizeZero=false}[Emp{eid=1, empName='admin', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=2, empName='admin2', age=22, sex='男', email='456@qq.com', did=3}, Emp{eid=3, empName='王五', age=12, sex='女', email='123@qq.com', did=3}, Emp{eid=4, empName='赵六', age=32, sex='男', email='123@qq.com', did=1}]
 	```
@@ -1482,6 +1495,7 @@ public void testPageHelper() throws IOException {
 }
 ```
 - 分页相关数据：
+
 	```
 	PageInfo{
 	pageNum=1, pageSize=4, size=4, startRow=1, endRow=4, total=8, pages=2, 
