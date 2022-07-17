@@ -55,7 +55,7 @@ public class MyBatisTest {
         /*User user = mapper.getUserById();
         System.out.println(user);*/
         List<User> list = mapper.getAllUser();
-        list.forEach(user -> System.out.println(user));
+        //list.forEach(user -> System.out.println(user));
 }
 
 }
