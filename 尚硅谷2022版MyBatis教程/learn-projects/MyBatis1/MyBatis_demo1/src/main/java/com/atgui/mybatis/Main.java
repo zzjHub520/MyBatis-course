@@ -1,4 +1,4 @@
-package org.example;
+package com.atgui.mybatis;
 
 public class Main {
     public static void main(String[] args) {

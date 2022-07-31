@@ -35,7 +35,6 @@
 - 打包方式：jar
 - 引入依赖
 
-	```xml
 	<dependencies>
 		<!-- Mybatis核心 -->
 		<dependency>
@@ -57,7 +56,6 @@
 			<version>5.1.3</version>
 			</dependency>
 	</dependencies>
-	```
 ## 创建MyBatis的核心配置文件
 >习惯上命名为`mybatis-config.xml`，这个文件名仅仅只是建议，并非强制要求。将来整合Spring之后，这个配置文件可以省略，所以大家操作时可以直接复制、粘贴。
 >核心配置文件主要用于配置连接数据库的环境以及MyBatis的全局配置信息

@@ -1,4 +1,4 @@
-package org.example.pojo;
+package com.atgui.mybatis.pojo;
 
 import lombok.Data;
 
